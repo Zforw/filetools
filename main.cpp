@@ -36,12 +36,12 @@ void help() {
 void make() {
     umask(000);
     fd = open(file_name, O_RDWR | O_CREAT);
-    close(fd);
     if(fd < 0){
         printf("创建失败\n");
     } else{
         printf("创建成功\n");
     }
+    close(fd);
 }
 void write() {
     string buffer;
@@ -61,11 +61,11 @@ void write() {
     close(fd);
 }
 void read() {
-    char buffer[1<<10];
+    char buffer[1<<20];
     memset(buffer, 0, sizeof(buffer));
     fd = open(file_name, O_RDWR);
     lseek(fd, 0, SEEK_SET);
-    int returnnum=read(fd,buffer,1024);
+    int returnnum=read(fd,buffer,1024 * 1024);
     if(returnnum!=-1){
         printf("文件内容为：\n");
         printf("%s\n",buffer);
@@ -75,6 +75,12 @@ void read() {
     close(fd);
 }
 void chmod() {
+    struct stat buf;
+    stat(file_name, &buf);
+    if (geteuid() != buf.st_uid) {
+        cout <<"无法修改文件权限, 请查看您是否是文件所有者？" << endl;
+        return;
+    }
     struct stat statbuf;
     int m;
     if(strcmp(mode, "-w") == 0) {
