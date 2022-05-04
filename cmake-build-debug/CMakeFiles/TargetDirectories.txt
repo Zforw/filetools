@@ -1,0 +1,3 @@
+/home/zforw/CLionProjects/filetool/cmake-build-debug/CMakeFiles/filetool.dir
+/home/zforw/CLionProjects/filetool/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/zforw/CLionProjects/filetool/cmake-build-debug/CMakeFiles/rebuild_cache.dir
